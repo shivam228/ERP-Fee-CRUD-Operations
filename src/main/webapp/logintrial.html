@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title> Welcome to ERP Portal</title>
+</head>
+
+<body>
+<div class="main">
+    <p class="sign" align="center">ERP PORTAL</p>
+    <form class="form1">
+        <input class="un " type="text" align="center"  placeholder="Enter user name here" id="username">
+        <input class="pass" type="password" align="center" placeholder="Enter Password here" id="password">
+        <a class="submit" align="center" onclick='login()'>Sign in</a>
+
+    </form>
+
+</div>
+
+</body>
+
+<script>
+    function login() {
+        var uname = document.getElementById("username").value;
+        var pwd = document.getElementById("password").value;
+
+        if (uname == '') {
+            alert("please enter user name.");
+        } else if (pwd == '') {
+            alert("enter the password");
+        } else if (pwd.length < 3) {
+            alert("Password min and max length is 6.");
+        } else {
+            var request = new XMLHttpRequest();
+            var url = "http://localhost:8080/lab5resthibernate_war/api/form/login/"+ uname + "/"+pwd;
+            //console.log(url);
+            request.open('GET',url,true);
+            request.onload =()=>
+            {
+                var data = request.responseText;
+                if (request.status >= 200 && request.status < 400) {
+                    console.log(data);
+                    if(data=="success") {
+                        location.replace("buttons.html");
+                    }
+                    else {
+                        console.log('error');
+                        alert('wrong user')
+                    }
+                }
+            }
+            request.send();
+        }
+
+
+    }
+
+</script>
+
+
+</html>
